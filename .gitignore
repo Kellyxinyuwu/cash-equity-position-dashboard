@@ -1,2 +1,20 @@
 # Local learning notes. The public repo should show the system, not the study log.
 docs/
+
+# Local database and secrets. Created in stage 0, schema arrives in stage 2.
+data/*.sqlite
+data/*.sqlite-wal
+data/*.sqlite-shm
+.env
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+node_modules/

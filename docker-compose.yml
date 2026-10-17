@@ -1,0 +1,22 @@
+# The container serves the page. The SQLite file is the host's data/book.sqlite.
+name: cash-equity-position-dashboard
+services:
+  book:
+    build: .
+    ports:
+      # Host 8001. `make serve` already uses 8000 on the laptop.
+      - "8001:8000"
+    environment:
+      BOOK_DB: /data/book.sqlite
+      BOOK_HOST: 0.0.0.0
+      BOOK_PORT: "8000"
+      # From the host .env at compose time. Not baked into the image.
+      BOOK_PASSWORD: ${BOOK_PASSWORD:-}
+      MARKET_DATA_API_KEY: ${MARKET_DATA_API_KEY:-}
+      # Ollama on the laptop. 127.0.0.1 inside the container is not the laptop.
+      MODEL_NAME: ${MODEL_NAME:-llama3.2:latest}
+      MODEL_CHAT_URL: http://host.docker.internal:11434/v1/chat/completions
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/data

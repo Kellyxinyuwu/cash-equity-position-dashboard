@@ -1,0 +1,16 @@
+---
+description: Explain each build stage in chat and record it in docs/step-NN.md
+alwaysApply: true
+---
+
+# Stage notes
+
+Before coding a stage from `docs/project-proposal.md`, explain that stage's domain words in chat, in plain language, with the mother-problem numbers. Do not implement the next stage's formulas in the same turn.
+
+In that same turn, write `docs/step-NN.md` (for example `docs/step-00.md`) with what was just explained: the words, the formula, the mother-problem number, what code changed, what was left undone, and how to verify. Do not name that file README. Update the index in `docs/README.md`. Do this without waiting for a reminder.
+
+When code lands, add a walkthrough in that step file, in Chinese, following the source file from top to bottom. One short section per function or block. Say what that block does, the English name, and the mother-problem number it produces. Do not leave the reader with only the domain lesson.
+
+`docs/` stays gitignored. The public repo is the runnable system; the study log stays local.
+
+Language: chat and files under `docs/` are Chinese. Domain keywords in those notes are written as English（中文）, for example position（持仓）, so the English term is visible. Every other Markdown file, including the repository `README.md`, is English.
