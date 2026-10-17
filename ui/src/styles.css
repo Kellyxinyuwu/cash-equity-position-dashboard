@@ -32,33 +32,40 @@ body {
 
 .top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 1.15rem;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 1.25rem;
+  padding-bottom: 1.35rem;
+}
+
+.mast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
 }
 
 .toolbar {
   display: flex;
-  align-items: flex-end;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
 }
 
 .pull {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.35rem;
-  max-width: 16rem;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .pull p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   line-height: 1.35;
   text-align: right;
+  white-space: nowrap;
 }
 
 .pull.busy p {
@@ -123,9 +130,29 @@ body {
   color: var(--muted);
 }
 
+.top .kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+}
+
+.top .kicker::before {
+  content: "";
+  width: 1.35rem;
+  height: 1px;
+  background: var(--missing);
+}
+
+.title-block h1 {
+  margin: 0;
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(1.35rem, 3.1vw, 2.35rem);
+}
+
 h1 {
   margin: 0.2rem 0 0;
-  max-width: 14ch;
   font-family: "Iowan Old Style", Palatino, Georgia, serif;
   font-weight: 500;
   font-size: 2.35rem;
@@ -135,16 +162,30 @@ h1 {
 
 .deck {
   margin: 0.45rem 0 0;
-  max-width: 34rem;
+  max-width: 46rem;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.45;
 }
 
-.asof {
+.title-block .deck {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.2rem;
+  margin: 0.5rem 0 0;
+}
+
+.book-names {
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.asof {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--muted);
   font-size: 0.85rem;
 }
@@ -494,17 +535,24 @@ tbody tr:hover td:first-child {
 }
 
 @media (max-width: 800px) {
-  .top,
+  .mast,
+  .toolbar,
+  .pull {
+    align-items: flex-start;
+  }
+
+  .mast,
   .toolbar {
-    display: block;
+    flex-direction: column;
   }
 
-  .ghost {
-    margin-top: 0.75rem;
+  .pull {
+    flex-wrap: wrap;
   }
 
-  h1 {
-    font-size: 2.1rem;
+  .pull p {
+    white-space: normal;
+    text-align: left;
   }
 
   .ticket dl {

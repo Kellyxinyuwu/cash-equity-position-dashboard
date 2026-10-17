@@ -141,40 +141,46 @@ export function App() {
     return <Login onSignedIn={() => setAccess("open")} />;
   }
 
+  const names = bookNames(page);
   return (
     <div className="screen">
       <header className="top">
-        <div>
+        <div className="mast">
           <p className="kicker">After the close</p>
-          <h1>Cash Equity Position Dashboard</h1>
-          <p className="deck">{heldLine(page)}</p>
-        </div>
-        <div className="toolbar">
-          <form
-            className="asof"
-            onSubmit={(event) => {
-              event.preventDefault();
-            }}
-          >
-            <label htmlFor="as-of">Session date</label>
-            <input
-              id="as-of"
-              type="date"
-              value={asOf || page?.as_of || ""}
-              onChange={(event) => setAsOf(event.target.value)}
+          <div className="toolbar">
+            <form
+              className="asof"
+              onSubmit={(event) => {
+                event.preventDefault();
+              }}
+            >
+              <label htmlFor="as-of">Session date</label>
+              <input
+                id="as-of"
+                type="date"
+                value={asOf || page?.as_of || ""}
+                onChange={(event) => setAsOf(event.target.value)}
+              />
+            </form>
+            <PullButton
+              state={pull}
+              phase={phase}
+              note={pullNote}
+              onPull={() => void pullLatest()}
             />
-          </form>
-          <PullButton
-            state={pull}
-            phase={phase}
-            note={pullNote}
-            onPull={() => void pullLatest()}
-          />
-          {passwordRequired ? (
-            <button type="button" className="ghost" onClick={() => void signOut()}>
-              Sign out
-            </button>
-          ) : null}
+            {passwordRequired ? (
+              <button type="button" className="ghost" onClick={() => void signOut()}>
+                Sign out
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="title-block">
+          <h1>Cash Equity Position Dashboard</h1>
+          <p className="deck">
+            {names ? <span className="book-names">{names}</span> : null}
+            <span>Shares held in this book, marked to the official close.</span>
+          </p>
         </div>
       </header>
 
@@ -203,6 +209,7 @@ function PullButton({
   const pulling = phase === "pulling";
   return (
     <div className={pulling ? "pull busy" : "pull"}>
+      <p>{pulling ? "Pulling the latest close…" : note || pullStatusLine(state)}</p>
       <button
         type="button"
         className="solid"
@@ -213,7 +220,6 @@ function PullButton({
         {pulling ? <span className="spin" aria-hidden="true" /> : null}
         {pulling ? "Pulling…" : "Refresh"}
       </button>
-      <p>{pulling ? "Pulling the latest close…" : note || pullStatusLine(state)}</p>
     </div>
   );
 }
@@ -248,10 +254,9 @@ function pullStatusLine(state: PullState | null): string {
   return "No official close is stored.";
 }
 
-function heldLine(page: BookPage | null): string {
-  const base = "Shares held in this book, marked to the official close.";
-  if (!page || page.names.length === 0) return base;
-  return `${page.names.map((name) => name.symbol).join(" · ")}. ${base}`;
+function bookNames(page: BookPage | null): string {
+  if (!page || page.names.length === 0) return "";
+  return page.names.map((name) => name.symbol).join(" · ");
 }
 
 function Book({ page, onReviewed }: { page: BookPage; onReviewed: () => void }) {

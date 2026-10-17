@@ -14,6 +14,8 @@ The repository is [cash-equity-position-dashboard](https://github.com/Kellyxinyu
 | Risk | Read the draft against the ticket fields, then confirm or reject |
 | Desk developer | Pull closes, keep the formulas in code, and let a model write only after a rule fires |
 
+![Cash Equity Position Dashboard for the 2026-09-17 session](assets/dashboard.png)
+
 ## Start
 
 ```bash
